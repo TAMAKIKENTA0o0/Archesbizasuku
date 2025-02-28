@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Resume</title>
+    <style>
+        /* Dark mode styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        /* Full-page drop zone styling */
+        .drop-zone {
+            outline: 2px dashed white;
+            outline-offset: -10px;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-align: center;
+        }
+        .drop-zone:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2979FF;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #5390F5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="drop-zone" onclick="document.getElementById('fileInput').click();">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input id="fileInput" type="file" name="file" onchange="form.submit()" />
+        <label for="fileInput" class="btn">Upload your file!</label>
+    </form>
+    <p>Drag and drop your file anywhere on this page</p>
+</div>
+
+<script>
+    // JavaScript for enabling drag and drop
+    const dropZone = document.querySelector('.drop-zone');
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.backgroundColor = 'rgba(255,255,255,0.1)';
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.backgroundColor = '';
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        document.getElementById('fileInput').files = e.dataTransfer.files;
+        // Automatically submit form when a file is dropped
+        const form = document.querySelector('form');
+        form.submit();
+    });
+</script>
+
+</body>
+</html>
